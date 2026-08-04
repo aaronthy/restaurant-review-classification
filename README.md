@@ -1,301 +1,275 @@
-# Restaurant Review Intelligence System (NLP + Analytics)
+# 🍽️ Restaurant Review Intelligence Platform
 
-## Overview
+An end-to-end NLP application that classifies restaurant reviews and turns unstructured customer feedback into actionable operational insights.
 
-This project builds an end-to-end **machine learning and analytics system** that classifies restaurant reviews into operational categories and transforms unstructured customer feedback into **actionable business insights**.
+Built with Python, scikit-learn, FastAPI, and Streamlit, this project shows how natural language processing can support data-driven restaurant management by surfacing recurring customer issues and visualizing operational trends.
 
-The system includes:
-- An NLP model for automated classification  
-- A REST API for real-time predictions  
-- An interactive dashboard for operational analysis and decision-making  
+**[Repository](https://github.com/aaronthy/restaurant-review-intelligence-system)**
+
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)
+![scikit-learn](https://img.shields.io/badge/scikit--learn-ML-F7931E?style=flat-square&logo=scikitlearn&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-REST_API-009688?style=flat-square&logo=fastapi&logoColor=white)
+![Streamlit](https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?style=flat-square&logo=streamlit&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-lightgrey?style=flat-square)
+
+---
+
+## Why I Built This
+
+After five years managing a high-volume restaurant, I saw firsthand that customer reviews were a goldmine of operational insight — but reading through hundreds of them manually to spot patterns in food quality, wait times, cleanliness, or staffing is slow, subjective, and doesn't scale.
+
+This project explores how machine learning can automate that process: categorizing feedback, surfacing recurring problems, and helping managers make faster, data-driven decisions.
+
+Rather than building just a text classifier, the goal was a complete AI application spanning the full stack:
+
+- 🤖 Machine learning model
+- 🔌 REST API
+- 📊 Interactive dashboard
+- 📈 Business analytics
+- 💡 Operational recommendations
 
 ---
 
 ## Features
 
-- Text classification using TF-IDF + LinearSVC  
-- Handles imbalanced dataset (resampling + class weights)  
-- Model versioning (timestamped models)  
-- Experiment tracking (metrics.csv)  
-- REST API (FastAPI) for prediction  
-- Interactive chat-style UI (Streamlit)  
-- Top-3 label predictions with confidence scores  
-- Interactive analytics dashboard (Streamlit) for operational insights  
+### Machine Learning
+- TF-IDF vectorization (unigrams + bigrams)
+- LinearSVC classifier
+- Handles class imbalance via controlled resampling and class weighting
+- Model versioning with automatic timestamping
+- Experiment tracking via `metrics.csv`
+
+### Prediction Service
+- FastAPI REST API for real-time review classification
+- Top-3 category predictions with confidence scores
+
+### Interactive Applications
+
+**Streamlit Review Assistant**
+- Chat-style interface for instant predictions
+- Top-3 predicted categories, no coding required to test
+
+**Restaurant Operations Dashboard**
+- Category distribution and sentiment trends
+- Average ratings and complaint frequency
+- Operational KPIs and automated business recommendations
 
 ---
 
-## Model Details
+## Project Workflow
 
-- **Vectorizer:** TF-IDF (unigrams + bigrams)  
-- **Model:** LinearSVC  
-- **Class Handling:** class_weight="balanced" + controlled resampling  
-
-### Example
-
-**Input**
+```text
+Restaurant Reviews
+        │
+        ▼
+Data Cleaning & Labeling
+        │
+        ▼
+TF-IDF Vectorization
+        │
+        ▼
+LinearSVC Classification Model
+        │
+ ┌──────┴──────────┐
+ ▼                  ▼
+FastAPI API     Streamlit Dashboard
+        │
+        ▼
+Business Insights & Operational Recommendations
 ```
-Food was cold and bland.
-```
-
-**Output**
-```
-food_quality
-```
-
-## Performance
-
-| Metric      | Value |
-|------------|------|
-| Accuracy   | ~75% |
-| Macro F1   | ~0.68 |
-
-> Performance varies across classes due to imbalance and overlapping categories (e.g., service vs waiting_time).
 
 ---
 
-## System Architecture
+## Machine Learning Model
 
-- **Data Processing:** Cleaning and labeling Yelp review data  
-- **Model Training:** TF-IDF + LinearSVC classification model  
-- **API Layer:** FastAPI service for real-time predictions  
-- **Application Layer:** Streamlit chat app for predictions  
-- **Analytics Layer:** Dashboard for KPI analysis and business insights  
+| Component       | Method                                        |
+|------------------|------------------------------------------------|
+| Vectorizer       | TF-IDF (unigrams + bigrams)                    |
+| Classifier       | LinearSVC                                       |
+| Class Handling   | Controlled resampling + `class_weight="balanced"` |
+
+**Example**
+
+Input:
+```text
+"The food was cold and the service was extremely slow."
+```
+
+Prediction: `food_quality`
+
+Top-3 predictions:
+```json
+{
+  "top_3": ["food_quality", "waiting_time", "service"]
+}
+```
 
 ---
 
-## Project Structure
+## Model Performance
 
-restaurant-ml/
-│
-├──images/
-│ ├── chatapp1.png
-│ ├── chatapp2.png
-│ ├── dashboard1.png
-│ ├── dashboard2.png
-│ └── dashboard3.png
-│
+| Metric    | Score |
+|-----------|------:|
+| Accuracy  | ~75%  |
+| Macro F1  | ~0.68 |
+
+Performance varies across categories due to class imbalance and overlapping operational labels such as **service** and **waiting_time**.
+
+---
+
+## Repository Structure
+
+```text
+restaurant-review-intelligence-system/
 ├── data/
-│ ├── yelp_labeled.csv
-│ └── yelp_sample.csv
+│   ├── yelp_sample.csv
+│   └── yelp_labeled.csv
 │
 ├── models/
-│ ├── text_classifier.joblib
-│ ├── text_classifier_*.joblib
-│ └── metrics.csv
+│   ├── text_classifier.joblib
+│   ├── metrics.csv
+│   └── vectorizer.joblib
 │
 ├── src/
-│ ├── analysis/
-│ │ └── dashboard_data.py
-│ ├── app/
-│ │ └── dashboard.py
-│ ├── train_model.py
-│ ├── predict.py
-│ ├── api.py
-│ ├── kpi_analysis.py
-│ ├── label_data.py
-│ ├── load_yelp.py
-│ └── chat_app.py
-│ 
+│   ├── analysis/
+│   ├── app/
+│   ├── api.py
+│   ├── train_model.py
+│   ├── predict.py
+│   ├── chat_app.py
+│   ├── label_data.py
+│   └── load_yelp.py
+│
+├── images/
 ├── requirements.txt
-├── README.md
-└── .gitignore
-
-## Installation
- 
-Clone the repository
-
-```bash
-git clone https://github.com/aaronthy/restaurant-review-classification
-cd restaurant-review-classification
-
+└── README.md
 ```
 
-## Create Environment
+---
+
+## Dashboard Preview
+
+### Restaurant Review Assistant
+
+![Restaurant Review Assistant](images/chatapp1.png)
+![Restaurant Review Assistant](images/chatapp2.png)
+
+The Streamlit app lets users enter a customer review and get real-time category predictions with confidence scores.
+
+### Restaurant Operations Dashboard
+
+![Restaurant Operations Dashboard](images/dashboard1.png)
+![Restaurant Operations Dashboard](images/dashboard2.png)
+![Restaurant Operations Dashboard](images/dashboard3.png)
+
+The dashboard visualizes operational trends and helps managers quickly spot recurring issues through interactive charts and KPI summaries, including:
+
+- Review category distribution
+- Lowest-rated operational category
+- Most common customer complaints
+- Automated business recommendations
+
+---
+
+## Business Insights
+
+Analysis of **1,481 categorized customer reviews** revealed several operational trends:
+
+- Food quality (34.7%) and price/value (30.8%) together account for over 65% of customer feedback.
+- Wait time, staffing, and order accuracy appear less frequently, but are strongly associated with negative customer experiences.
+- Operational issues often have an outsized impact on satisfaction relative to how often they're mentioned.
+
+---
+
+## Potential Business Value
+
+This platform demonstrates how AI can help restaurant operators:
+
+- Reduce manual review analysis time
+- Detect recurring operational issues early
+- Improve staffing decisions
+- Monitor customer satisfaction trends
+- Identify service bottlenecks
+- Support data-driven operational improvements
+
+---
+
+## Challenges
+
+- Class imbalance across categories
+- Overlapping operational labels (e.g., service vs. waiting_time)
+- Inconsistent manual labeling
+- Limited labeled training data
+
+These challenges reinforced the importance of data quality alongside model selection.
+
+---
+
+## Future Roadmap
+
+- [ ] Replace TF-IDF with Sentence-BERT embeddings
+- [ ] Support multi-label classification
+- [ ] Containerize with Docker
+- [ ] Deploy to the cloud (AWS/Azure)
+- [ ] Migrate to a PostgreSQL backend
+- [ ] Add a CI/CD pipeline
+- [ ] LLM-generated management summaries
+- [ ] Authentication and multi-user support
+
+---
+
+## Tech Stack
+
+`Python` · `scikit-learn` · `pandas` · `NumPy` · `FastAPI` · `Streamlit` · `Joblib`
+
+---
+
+## Installation
+
+```bash
+git clone https://github.com/aaronthy/restaurant-review-intelligence-system.git
+cd restaurant-review-intelligence-system
+```
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
-
 ```
-
-## Install Dependencies
 
 ```bash
 pip install -r requirements.txt
-
 ```
 
-## Train Model
-
+**Train the model**
 ```bash
-python .\src\train_model.py
-
+python src/train_model.py
 ```
 
-This will:
-
--Train the model
-
--Save versioned models
-
--Update latest model
-
--Log metrics
-
----
-
-## Predict (CLI)
-
-```bash
-python src/predict.py
-
-```
-
-## Run API
-
+**Run the API**
 ```bash
 uvicorn src.api:app --reload
-
 ```
 
-Open API docs:
-
-```bash
-
-http://127.0.0.1:8000/docs
-
-```
-
-## Run Web App
-
+**Run the Streamlit assistant**
 ```bash
 streamlit run src/chat_app.py
-
 ```
-Features:
 
-Chat-style input
-
-Real-time predictions
-
-Top 3 label suggestions
-
----
-
-## Demo
-
-### Streamlit Chat App
-![Chat App](images/chatapp1.png)
-![Chat App](images/chatapp2.png)
-
-The chat application allows users to input reviews and receive real-time classification predictions with top-3 label suggestions.
-
-## Dashboard (Business Analytics)
-
-This project also includes an interactive **Restaurant Operations Dashboard** built with Streamlit to analyze customer feedback and identify key operational issues.
-
-The dashboard enables stakeholders to quickly identify key operational issues and make data-driven decisions.
-
-### Features
-
-- Review category distribution (service, food quality, pricing, etc.)
-- Average rating by category
-- Identification of problem areas based on low ratings
-- Interactive filtering to explore reviews by category
-- Automated business insights and recommendations
-
-### Example Insights
-
-- Identifies the **lowest-rated category**
-- Highlights the **most frequent complaint areas**
-- Provides **data-driven recommendations** to improve operations
-
-### Run Dashboard
-
+**Run the dashboard**
 ```bash
-python -m streamlit run src/app/dashboard.py
+streamlit run src/app/dashboard.py
 ```
-## Dashboard Preview
-![Dashboard](images/dashboard1.png)
-![Dashboard](images/dashboard2.png)
-![Dashboard](images/dashboard3.png)
-
-
-## Challenges & Learnings
-
-- **Class imbalance:**  
-  Majority "service" class required downsampling and class weighting  
-
-- **Label ambiguity:**  
-  Some categories overlap (e.g., service vs waiting_time)  
-
-- **Data quality matters:**  
-  Improving labeling consistency has a bigger impact than model changes  
 
 ---
 
-## Future Improvements
+## About This Project
 
-Add more labeled data for rare classes
-
-Improve label definitions
-
-Add probability calibration
-
-Deploy as public web app
-
-Add dashboard for insights
+Developed independently as part of my transition into AI/ML engineering, this project combines hands-on restaurant operations experience with machine learning to show how AI can solve practical business problems through data-driven automation and analytics.
 
 ---
-
-## Business Use Case
-
-This model can help restaurant operators:
-
-- Identify common customer complaints  
-
-- Improve service quality  
-
-- Monitor operational issues  
-
-- Make data-driven decisions  
-
----
-
-## Insights
-
-Analysis of 1,481 customer reviews revealed key patterns in customer feedback:
-
-- **Food quality (34.7%) and price/value (30.8%)** are the most frequently mentioned factors, accounting for 65.5% of all feedback  
-- This suggests that customers primarily evaluate restaurants based on **product quality and price value**  
-- **Ambience (10.2%) and cleanliness (8.2%)** are secondary factors that influence customer experience  
-- **Operational issues** such as waiting time (4.2%), order accuracy (3.4%), and staffing (1.5%) appear less frequently but may have a **direct impact on customer dissatisfaction**  
-- **Management**-related feedback (7.0%) indicates that organizational factors also contribute to customer perception  
-
-These findings highlight that both **core product quality and operational efficiency** play critical roles in customer satisfaction.
-
-These insights highlight key factors influencing customer satisfaction and areas for operational improvement.
-
-## Business Recommendations
-
-Based on the analysis:
-
-- **Focus on food quality consistency**, as it is the most critical factor influencing customer perception  
-- **Optimize pricing strategy and portion value**, as price/value is a major driver of feedback  
-- Maintain **cleanliness and ambience standards** to support overall customer experience  
-- Monitor operational issues such as **waiting time and order accuracy**, as these can significantly impact negative reviews despite lower frequency  
-- Investigate management-related feedback to identify potential systemic issues  
-- Although operational issues (e.g., waiting time, staffing) occur less frequently, they are often associated with negative customer experiences and may disproportionately impact low ratings  
-
-Improving both **core product quality** and **operational execution** can lead to higher customer satisfaction and improved ratings.
 
 ## Author
 
-Aaron Tsen Heng Yee
+**Aaron Tsen Heng Yee**
 
-
-
-
-
-
-
+[GitHub](https://github.com/aaronthy) · [LinkedIn](https://www.linkedin.com/in/aaron-tsen-heng-yee/)
